@@ -23,13 +23,17 @@ async function runHealthcheck() {
       const responseTimeMs = Date.now() - startTime;
 
       if (response.ok) {
-        await sendOkLog({
-          url: targetUrl,
-          status: response.status,
-          responseTimeMs,
-          timestamp,
-          healthy: true
-        });
+        try {
+          await sendOkLog({
+            url: targetUrl,
+            status: response.status,
+            responseTimeMs,
+            timestamp,
+            healthy: true
+          });
+        } catch {
+          // okLog can fail if is not configured, but we don't want to stop the process
+        }
       } else {
         const errorMsg = `HTTP Error ${response.status} ${response.statusText}`;
         await notifyFailure(targetUrl, errorMsg, responseTimeMs);
