@@ -19,9 +19,7 @@ Para el correcto funcionamiento en un repositorio público o privado, es necesar
 
 | Nombre | Descripción | Ejemplo de valor |
 | --- | --- | --- |
-| `SITES_TO_CHECK` | Lista de URLs a evaluar, separadas por saltos de línea. | `[https://sitio1.com](https://sitio1.com)`<br>
-
-<br>`[https://api.sitio2.com/health](https://api.sitio2.com/health)` |
+| `SITES_TO_CHECK` | Lista de URLs a evaluar, separadas por saltos de línea. | `[https://sitio1.com](https://sitio1.com)`<br>`[https://api.sitio2.com/health](https://api.sitio2.com/health)` |
 | `LOG_ENDPOINT` | Endpoint HTTP que recibirá los registros exitosos mediante POST. | `[https://api.midominio.com/logs](https://api.midominio.com/logs)` |
 | `TELEGRAM_BOT_TOKEN` | Token de acceso del bot de Telegram. | `123456789:ABCdefGHIjklMNOpqrsTUVwxyZ` |
 | `TELEGRAM_CHAT_ID` | Identificador único del chat o canal receptor en Telegram. | `-100123456789` |
