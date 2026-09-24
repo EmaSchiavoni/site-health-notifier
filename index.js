@@ -1,5 +1,6 @@
 import { sendOkLog } from "./okLog";
 import { sendEmailNotification } from "./emailNotification";
+import { sendTelegramNotification } from "./telegramNotification";
 
 const SITES_LIST = process.env.SITES_TO_CHECK || '';
 
@@ -42,10 +43,14 @@ async function runHealthcheck() {
 
 async function notifyFailure(targetUrl, reason, duration) {
   const time = new Date().toISOString();
+  const telegramText = `⚠️ <b>Healthcheck Fallido</b>\n\n<b>URL:</b> <code>${targetUrl}</code>\n<b>Causa:</b> ${reason}\n<b>Latencia:</b> ${duration}ms\n<b>Fecha:</b> ${time}`;
   const emailSubject = `[Alerta Healthcheck] Fallo detectado en servicio`;
   const emailBody = `Fallo detectado durante el chequeo:<br><br><b>URL:</b> ${targetUrl}<br><b>Error:</b> ${reason}<br><b>Latencia:</b> ${duration}ms<br><b>Fecha UTC:</b> ${time}`;
 
-  await sendEmailNotification(emailSubject, emailBody);
+  await Promise.allSettled([
+    sendTelegramNotification(telegramText),
+    sendEmailNotification(emailSubject, emailBody)
+  ]);
 }
 
 runHealthcheck();
