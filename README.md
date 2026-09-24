@@ -51,7 +51,7 @@ Cuando un sitio responde correctamente, el script envía una petición `POST` co
 Para probar el script en un entorno de desarrollo local, defina las variables de entorno necesarias y ejecute:
 
 ```bash
-pnpm install
+npm install
 SITES_TO_CHECK="https://httpbin.org/status/200" LOG_ENDPOINT="https://httpbin.org/post" node index.js
 
 ```
