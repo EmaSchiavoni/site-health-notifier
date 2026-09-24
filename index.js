@@ -1,3 +1,5 @@
+import { sendOkLog } from "./okLog";
+
 const SITES_LIST = process.env.SITES_TO_CHECK || '';
 
 const sites = SITES_LIST.split('\n')
@@ -16,9 +18,19 @@ async function runHealthcheck() {
         signal: AbortSignal.timeout(10000)
       });
 
-      if (!response.ok) {
+      const responseTimeMs = Date.now() - startTime;
+
+      if (response.ok) {
+        await sendOkLog({
+          url: targetUrl,
+          status: response.status,
+          responseTimeMs,
+          timestamp,
+          healthy: true
+        });
+      } else {
         const errorMsg = `HTTP Error ${response.status} ${response.statusText}`;
-        await logFailure(targetUrl, errorMsg);
+        await notifyFailure(targetUrl, errorMsg, responseTimeMs);
       }
     } catch (err) {
       await logFailure(targetUrl, err.message);
