@@ -1,6 +1,6 @@
-import { sendOkLog } from "./okLog";
-import { sendEmailNotification } from "./emailNotification";
-import { sendTelegramNotification } from "./telegramNotification";
+import { sendOkLog } from "./okLog.js";
+import { sendEmailNotification } from "./emailNotification.js";
+import { sendTelegramNotification } from "./telegramNotification.js";
 
 const SITES_LIST = process.env.SITES_TO_CHECK || '';
 
