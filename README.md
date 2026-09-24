@@ -1,4 +1,4 @@
-# Site healthcheck notificator
+# Site healthcheck notifier
 
 ## Descripción
 
