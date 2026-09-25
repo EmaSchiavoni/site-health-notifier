@@ -27,6 +27,24 @@ Para el correcto funcionamiento en un repositorio público o privado, es necesar
 | `NOTIFY_EMAIL_FROM` | Dirección de correo electrónico del remitente (verificada en Brevo). | `alertas@midominio.com` |
 | `NOTIFY_EMAIL_TO` | Dirección de correo electrónico que recibirá las notificaciones. | `admin@midominio.com` |
 
+## Configurar cronjob
+
+El cronjob está configurado en el archivo `.github/workflows/healthcheck.yml`.
+Se debe realizar manualmente una primera ejecución en GitHub Actions y luego se encolarán los cronjobs.
+Los cronjobs de GitHub se colocan en cola y no garantizan ejecutarse en el tiempo correcto, y de hecho
+en la actualidad tienen un retraso bastante alto, por eso recomiendo utilizar el servicio gratuito de
+`cron-job.org` apuntando al endpoint 
+`https://api.github.com/repos/<github_user>/site-health-notifier/actions/workflows/healthcheck.yml/dispatches`
+y configurandole los siguientes encabezados: <br>
+
+| Clave | Valor |
+| --- | --- |
+| `Accept` | application/vnd.github+json |
+| `Authorization` | Bearer <github_token> |
+| `Content-Type` | application/json |
+| `User-Agent` | CronJob-Agent |
+
+> **Nota:** Reemplace `<github_token>` por un fine-grained token con permisos de read & write para workflows y actions en el repositorio.
 ---
 
 ## Estructura del Payload enviado al LOG_ENDPOINT
